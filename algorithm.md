@@ -1242,7 +1242,101 @@ def BruteForce(p,t):
 
 
 
+# 8월 16일
 
+### GNS 문제
+
+딕셔너리는 해시 테이블
+
+딕셔너리가 없다면 어떻게 풀겠는가?
+
+#### 방법 1
+
+```c
+if (strcmp(arr,"zro")){
+  int x = 0;
+}
+elif (strcmp(arr,"one")){
+  x = 1;
+} ..... 등등
+```
+
+일단 숫자로 매핑한 뒤, 퀵정렬로 정렬.  그리고 대응되는 문자열을 출력
+
+- 이러면 과거엔 어드 못 땄음
+- 어드 통과한 사람은 카운팅 정렬 사용 (범위가 다 정수형이고 범위가 정해져있는 경우에 카운팅 정렬이 더 빠른!!)
+
+
+
+#### 방법 2. 카운팅 정렬
+
+```python
+def getidx(num):
+  for i in range(10):
+    if num[0] == p[i][0] and num[1] == p[i][1] and num[2] == p[i][2]:
+      return i
+
+for tc in range(1, TC + 1):
+  temp = input()
+  nums = input().split()
+  cnt = [0] * 10
+  for num in nums:
+    cnt[getidx(num)] += 1
+    
+  ans = ''
+  for i in range(10):
+    ans += p[i] * cnt[i]
+  print("#%d "% tc, ans)
+```
+
+시간을 줄일 수 있는 방법?
+
+
+
+**공간을 팔아서 시간을 번다**
+
+
+
+#### 방법 3. 공간을 파는 방법
+
+```python
+numidx = [[0] * 100 for _ in range(100)]
+numidx[ord('Z')][ord('R')] = 0
+numidx[ord('O')][ord('N')] = 1
+numidx[ord('T')][ord('W')] = 2
+numidx[ord('T')][ord('H')] = 3
+numidx[ord('F')][ord('O')] = 4
+numidx[ord('F')][ord('I')] = 5
+numidx[ord('S')][ord('I')] = 6
+numidx[ord('S')][ord('V')] = 7
+numidx[ord('E')][ord('G')] = 8
+numidx[ord('N')][ord('I')] = 9
+
+p = ["ZRO ", "ONE ", "TWO ", "THR ", "FOR ", "FIV ", "SIX ", "SVN ", "EGT ", "NIN "]
+
+TC = int(input())
+
+for tc in range(1, TC + 1):
+
+  temp = input()
+  nums = input().split()
+
+  cnt = [0] * 10
+
+  for num in nums:
+    cnt[numidx[ord(num[0])][ord(num[1])]] += 1
+
+    ans = ''
+    for i in range(10):
+      ans += p[i] * cnt[i]
+      print("#%d "%tc, ans)
+```
+
+자료를 잘 정리해서 빨리 뽑아내는 방법을 고안하는 것이 프로적인 마인드
+
+만 개의 공간을 확보해서 열 개만 쓰겠다는 것
+
+이진탐색이 계속 되면 차라리 이진탐색 트리를 쓰는 게 낫지 않을까? 라는게 프로의 마인드
 
 
 
