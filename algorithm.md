@@ -1354,6 +1354,69 @@ for tc in range(1, TC + 1):
 
 # 8월 21일
 
+## Stack
+
+### 응용
+
+괄호를 조사하는 알고리즘
+
+- 문자열에 있는 괄호를 차례대로 조사 
+  - 왼쪽 괄호를 만나면 스택에 삽입
+  - 오른쪽 괄호를 만나면 스택에서 top 괄호를 삭제한 뒤 오른쪽 괄호와 짝이 맞는지 확인
+    - 스택이 비어있음 -> 조건 1또는 조건 2에 위배
+    - 괄호의 짝이 맞지 않음 -> 조건 3에 위배
+    - 문자열 끝까지 조사한 후에도 스택에 괄호가 남아있음 -> 조건 1에 위배
+
+
+
+#### Memoization
+
+가령 피보나치를 구하는 함수를 재귀함수로 작성할 경우, 엄청난 중복 호출이 발생한다.
+
+- Memoization이란?
+
+  - 컴퓨터 프로그램을 실행할 때 이전에 계산한 값을 메모리에 저장해서 매번 다시 계산하지 않도록 하여 전체적인 실행속도를 빠르게 하는 기술 (동적계획법의 핵심)
+
+    ```python
+    피보나치의 예
+    def fibo(n):
+      global memo
+      if n>=2 and len(memo) <= n:
+        memo.append(fibo(n-1) + fibo(n-2))
+      return memo[n]
+    memo = [0,1]
+    ```
+
+    
+
+### Dynamic Programming
+
+- 탐욕 알고리즘처럼 최적화 문제를 해결하는 알고리즘
+- 먼저 입력 크기가 작은 부분 문제들을 모두 해결한 후에 그 해들을 이용하여 보다 큰 크기의 부분 문제들을 해결 
+- 최종적으로 원래 주어진 입력의 문제를 해결
+
+```python
+피보나치에 DP를 적용
+def fibo(n):
+  f = [0,1]
+  for i in range(2, n+1):
+    f.append(f[i-1]+f[i-2])
+  return f[n]
+```
+
+
+
+##### DP 의 구현 방식
+
+- 재귀 방식
+  - 재귀적 구조는 내부에 시스템 호출 스택을 사용하는 overhead가 발생할 수 있음
+- 반복 방식
+  - Memoization을 재귀적 구조에 사용하는 것보다 반복적 구조로 DP를 구현하는 것이 성능 면에서 보다 효율적일 수 있다.
+
+
+
+
+
 ## DFS
 
 스택식 방법
@@ -1361,4 +1424,194 @@ for tc in range(1, TC + 1):
 1) 재귀- 시스템 스택을 사용
 
 -> 코드로 보고 대충 눈으로 보면 안 됨. 코드의 흐름을 완벽하게 이해하고 있어야 한다. 리턴 지점.
+
+
+
+
+
+
+
+# 8월 22일
+
+#### 스택구현
+
+```python
+stack = [0] * 10
+top = -1
+
+for i in range(3):
+    stack[top + 1] = i
+    top += 1
+
+for i in range(3):
+    t = stack[top]; top -= 1
+    print(t)
+```
+
+
+
+#### 괄호검사
+
+```python
+stack = [0] * 100
+top = -1
+str = "(()()))"
+
+wrong = 0
+for i in range(len(str)):
+    if str[i] == '(':
+        top += 1; stack[top] = str[i]
+    elif str[i] == ')':
+        if top == -1:
+            wrong = 1
+            break
+        if stack[top] == '(':
+            top -= 1
+
+if top == -1 and not wrong : print("correct!")
+else: print("wrong!")
+```
+
+
+
+```DFS
+def DFS(v):
+    visited = [0] * (8)
+    stack = [0] * 10
+    top = -1
+
+    top += 1
+    stack[top] = v
+
+    while top != -1:
+        v = stack[top]
+        top -= 1
+        if visited[v] != 1:
+            visited[v] = 1
+            print(v)
+            for i in range(1, 8):
+                if G[v][i] and not visited[i]:
+                    top += 1
+                    stack[top] = i
+
+edges = [1, 2, 1, 3, 2, 4, 2, 5, 4, 6, 5, 6, 6, 7, 3, 7]
+G = [[0]* (8) for _ in range(8)]
+
+
+for i in range(0, len(edges), 2):
+    G[edges[i]][edges[i+1]] = 1
+    G[edges[i+1]][edges[i]] = 1
+
+DFS(1)
+
+
+
+
+
+#
+# def DFSr(v):
+#     print(v)
+#     visited[v] = True
+#
+#     for i in range(1, 8):
+#         if G[v][i] and not visited[i]:
+#             DFSr(i)
+#
+#
+# edges = [1, 2, 1, 3, 2, 4, 2, 5, 4, 6, 5, 6, 6, 7, 3, 7]
+# visited = [0] * 8
+# G = [[0] * 8 for _ in range(8)]
+#
+# for i in range(0, len(edges), 2):
+#     G[edges[i]][edges[i+1]] = 1
+#     G[edges[i+1]][edges[i]] = 1
+#
+# DFSr(1)
+```
+
+
+
+
+
+#### 연습문제 3
+
+
+
+#### Ladders 1
+
+```python
+import sys
+sys.stdin = open("input.txt", "r")
+
+def check(x, y):
+    if x < 0 or x > 99 : return False
+    if y < 0 or y > 99 : return False
+
+    if mat[x][y] : return True
+    else : return False
+
+def solve( ):
+    s = 0
+    while True:
+        if mat[99][s] == 2: break
+        s += 1
+
+    x = 99
+    y = s
+    d = 0       # -1(왼쪽), 0(위), 1(오른쪽)
+
+    while x != 0 :
+        if   ((d == 0 or d == -1) and check(x, y - 1)) : d = -1; y -= 1
+        elif ((d == 0 or d ==  1) and check(x, y + 1)) : d =  1; y +=1
+        else :	d = 0; x -= 1
+
+    return y;
+
+
+for tc in range(1, 11):
+    input()
+    mat = [0] * 100
+    for i in range(100):
+        mat[i] = list(map(int, input().split()))
+
+    print('#%d'%tc, solve( ))
+```
+
+
+
+
+
+
+
+#### 작업경로
+
+- AOV (Activity on Vertex) : 위상정렬
+
+  작업의 단계에 대한 것.
+
+  1 -> 2 -> 3
+
+  2 작업을 위해선 반드시 1을 끝내야 한다.
+
+  그런데 
+
+  1 -> 2 -> 3
+
+     4 / 
+
+  이런 경우엔 => (1,4,2,3) (4,1,2,3) 두 경우 가능
+
+
+
+​		정점에 붙어있는 간선의 개수를 degree(''차수''라 함)
+
+​		-> 방향 그래프의 경우. 진입차수와 진출차수가 있음 -> 진입차수를 소거하며 가면 됨
+
+
+
+​		=> 엣지의 방향을 바꾼다!
+
+​		그리고 not visited 부터 출발한다.
+
+- AOE(Activity on Edges) : 임계경로
 
