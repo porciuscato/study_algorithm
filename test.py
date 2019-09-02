@@ -5,7 +5,7 @@ sys.stdin = open('input.txt', 'r')
 for T in range(1, int(input()) + 1):
     N = int(input())
     pan = [list(map(int, input().split())) for _ in range(N)]
-    board = [[-2] * (N + 2) for _ in range(N + 2)]
+    board = [[5] * (N + 2) for _ in range(N + 2)]
     for x in range(1, N + 1):
         for y in range(1, N + 1):
             board[x][y] = pan[x - 1][y - 1]
@@ -19,11 +19,16 @@ for T in range(1, int(input()) + 1):
         value = board[x][y]
         if value == -1:
             return False
-        elif value == -2 or value == 5:
+        elif value == 5:
             maxi = 1
             return False
         else:
             return True
+
+    def proceed(coordinate, direction):
+        cx, cy = coordinate
+
+        pass
 
 
     def chulbal(x, y):
@@ -38,13 +43,13 @@ for T in range(1, int(input()) + 1):
         while que:
             coordinate, direction = que.pop(0)
             total = proceed(coordinate, direction)
+            if maxi < total:
+                maxi = total
 
 
     for x in range(N):
         for y in range(N):
             if pan[x][y] == 0:
-                result = chulbal(x, y)
-                if maxi < chulbal:
-                    maxi = chulbal
+                chulbal(x, y)
 
     print('#{} {}'.format(T, maxi))
