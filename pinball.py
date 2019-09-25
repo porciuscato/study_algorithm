@@ -1,55 +1,14 @@
-import sys
+import requests
 
-sys.stdin = open('input.txt', 'r')
-
-for T in range(1, int(input()) + 1):
-    N = int(input())
-    pan = [list(map(int, input().split())) for _ in range(N)]
-    board = [[5] * (N + 2) for _ in range(N + 2)]
-    for x in range(1, N + 1):
-        for y in range(1, N + 1):
-            board[x][y] = pan[x - 1][y - 1]
-    maxi = 0
-    delta = [[-1, 0], [0, 1], [1, 0], [0, -1]]
-    direc = [0, 1, 2, 3]
-
-
-    def isvalid(x, y):
-        global maxi
-        value = board[x][y]
-        if value == -1:
-            return False
-        elif value == 5:
-            maxi = 1
-            return False
-        else:
-            return True
-
-    def proceed(coordinate, direction):
-        cx, cy = coordinate
-
-        pass
-
-
-    def chulbal(x, y):
-        global maxi
-        que = []
-        for i in range(4):
-            dx = x + delta[i][0]
-            dy = y + delta[i][1]
-            direc = i
-            if isvalid(dx, dy):
-                que.append([[dx, dy], direc])
-        while que:
-            coordinate, direction = que.pop(0)
-            total = proceed(coordinate, direction)
-            if maxi < total:
-                maxi = total
-
-
-    for x in range(N):
-        for y in range(N):
-            if pan[x][y] == 0:
-                chulbal(x, y)
-
-    print('#{} {}'.format(T, maxi))
+base = "https://api.telegram.org/bot"
+token = "921903489:AAHoGRwVcOuWfi7QG9EIOTo9c05fF33Q3ss"
+method = "sendMessage"
+jin_id = "592357679"
+jae_id = "776307592"
+text = "새로운 일정이 생겼어요"
+url1 = base + token + "/" + method + "?" + "chat_id=" + jin_id + "&" + "text=" + text
+url2 = base + token + "/" + method + "?" + "chat_id=" + jae_id + "&" + "text=" + text
+response1 = requests.get(url1)
+response2 = requests.get(url2)
+# print(response1)
+# print(response2)
