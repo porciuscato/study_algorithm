@@ -97,6 +97,67 @@ random 함수 확인해서 tc를 만들어라.
 
 
 
+# 테스트케이스 생성하기
+
+### python
+
+```python
+import sys
+import random
+
+sys.stdout = open('input.txt', 'w')
+
+scope = 1000000
+
+N = 100
+T = 10
+print(T)
+for _ in range(T):
+    print(N)
+    for n in range(N):
+        su = random.randint(1, 100)
+        print(su, end=' ')
+    print()
+```
+
+
+
+### CPP
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+void testcase() {
+	srand(unsigned int(time(NULL)));
+	freopen("input.txt", "w", stdout);
+	int scope = 100;
+	int T = 10;
+	cout << T << "\n";
+	for (int i = 0; i < T; i++) {
+		cout << scope << "\n";
+		for (int s = 0; s < scope; s++) {
+			cout << rand() % 10 + 1 << " ";
+		}
+		cout << "\n";
+	}
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+	cin.tie(0);
+    
+	testcase();
+}	
+```
+
+
+
+
+
 
 
 # 7월 31일
@@ -3725,9 +3786,121 @@ perm_r_3(0)
   # print(arr)
   ```
 
+
+
+
+- 퀵정렬: 내가 짜본 코드. 
+
+  - 내장함수보다 월등하게 느리다
+
+  ```python
+  def quick_sort(arr, left, right):
+      if left < right:
+          pivot = left
+          lp = left
+          rp = right
+          while lp < rp:
+              while lp < right and arr[lp] <= arr[pivot]:
+                  lp += 1
+              while rp > 0 and arr[rp] > arr[pivot]:
+                  rp -= 1
+              if lp < rp:
+                  arr[lp], arr[rp] = arr[rp], arr[lp]
+          if arr[pivot] >= arr[rp]:
+              arr[rp], arr[pivot] = arr[pivot], arr[rp]
+          p = rp
+          quick_sort(arr, left, p - 1)
+          quick_sort(arr, p + 1, right)
+  
+  
+  def q_sort(arr):
+      quick_sort(arr, 0, len(arr) - 1)
+  
+  
+  for T in range(1, int(input()) + 1):
+      N = int(input())
+      arr = list(map(int, input().split()))
+      q_sort(arr)
+      print('#{} {}'.format(T, arr[N // 2]))
+  ```
+
   
 
-퀵정렬
+- 이진탐색
 
-이진탐색
+  ```python
+  def search(b):
+      L = 0
+      R = N - 1
+      d = -1
+      while True:
+          M = (L + R) // 2
+          if A[M] == b:
+              return 1
+          if L == R:
+              return 0
+          if b < A[M]:
+              if d == 0:
+                  return 0
+              d = 0
+              R = M - 1
+          else:
+              if d == 1:
+                  return 0
+              d = 1
+              L = M + 1
+  
+  
+  for T in range(1, int(input()) + 1):
+      N, M = map(int, input().split())
+      A = list(map(int, input().split()))
+      B = list(map(int, input().split()))
+      A.sort()
+      ans = 0
+      for b in B:
+          ans += search(b)
+      print('#{} {}'.format(T, ans))
+  ```
+
+  
+
+
+
+# 9월 30일
+
+### 3752 가능한 시험점수
+
+- 부분집합 문제이지만 부분집합으로는 시간 초과가 발생
+- 그러므로 DP를 활용하여 문제를 해결
+
+```python
+import sys
+from datetime import datetime
+
+sys.stdin = open('input.txt', 'r')
+
+start = datetime.now()
+for T in range(1, int(input()) + 1):
+    N = int(input())
+    num = list(map(int, input().split()))
+    save = [1] + ([0] * sum(num))
+    ans = 1
+    temp = [0]
+    for n in num:
+        for i in range(ans):
+            if save[n + temp[i]] == 0:
+                save[n + temp[i]] = 1
+                ans += 1
+                temp += [n + temp[i]]
+    print('#{} {}'.format(T, ans))
+print(datetime.now() - start)
+```
+
+
+
+
+
+# 10월 1일
+
+TSP의 DP 해결
 

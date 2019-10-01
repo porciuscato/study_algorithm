@@ -1,47 +1,44 @@
-import random
+import sys
 from datetime import datetime
 
-
-def merge(left, right):
-    global m_count
-    m_count += 1
-    result = []
-    llen = len(left)
-    rlen = len(right)
-    lp = rp = 0
-    while lp < llen and rp < rlen:
-        if left[lp] < right[rp]:
-            result += [left[lp]]
-            lp += 1
-        else:
-            result += [right[rp]]
-            rp += 1
-    if lp == llen:
-        result += right[rp:rlen]
-    else:
-        result += left[lp:llen]
-    return result
+sys.stdin = open('output.txt', 'r')
 
 
-def merge_sort(L, R):
-    global d_count
-    d_count += 1
-    if L == R - 1:
-        return arr[L:R]
-    else:
-        M = (L + R) // 2
-        left = merge_sort(L, M)
-        right = merge_sort(M, R)
-        return merge(left, right)
+def partition(arr, left, right):
+    pivot = arr[left]
+    lp = left + 1
+    rp = right
+    while lp < rp:
+        while arr[lp] < pivot:
+            if lp == N - 1:
+                break
+            else:
+                lp += 1
+        while arr[rp] > pivot:
+            if rp == 0:
+                break
+            else:
+                rp -= 1
+        
+    return 0
 
 
-d_count = 0
-m_count = 0
-N = 10000000
-arr = [random.randint(1, 1000000) for _ in range(N)]
-# print(arr)
+def quick_sort(arr, left, right):
+    if left < right:
+        cri = partition(arr, left, right)
+        quick_sort(arr, left, cri - 1)
+        quick_sort(arr, cri + 1, right)
+
+
+def qsort(arr):
+    quick_sort(arr, 0, N - 1)
+
+
 start = datetime.now()
-arr = merge_sort(0, N)
+for T in range(1, int(input()) + 1):
+    N = int(input())
+    num = list(map(int, input().split()))
+    qsort(num)
+    print(num)
+    print('#{} {}'.format(T, num[N // 2]))
 print(datetime.now() - start)
-print('count : {}, {}'.format(d_count, m_count))
-# print(arr)

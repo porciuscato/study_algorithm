@@ -1,2 +1,2 @@
-﻿  test.cpp
-  test.cpp.vcxproj -> C:\Users\student\study_algorithm\c++\test.cpp\Debug\test.cpp.exe
+﻿  main.cpp
+c:\users\student\study_algorithm\c++\test.cpp\test.cpp\main.cpp(51): error C2664: 'void dfs(int &,int **,int *,int,int)': 인수 1을(를) 'int *'에서 'int &'(으)로 변환할 수 없습니다.
