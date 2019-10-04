@@ -1,44 +1,66 @@
 import sys
 from datetime import datetime
 
-sys.stdin = open('output.txt', 'r')
+
+def permu(depth, arr):
+    if depth == M:
+        return
+    else:
+        for i in range(N):
+            if not v[i]:
+                ar = arr[:]
+                ar.append(i)
+                v[i] = 1
+                permu(depth + 1, ar)
+                v[i] = 0
 
 
-def partition(arr, left, right):
-    pivot = arr[left]
-    lp = left + 1
-    rp = right
-    while lp < rp:
-        while arr[lp] < pivot:
-            if lp == N - 1:
-                break
-            else:
-                lp += 1
-        while arr[rp] > pivot:
-            if rp == 0:
-                break
-            else:
-                rp -= 1
-        
-    return 0
+def combi(arr, depth, last):
+    if depth == 5:
+        return
+    else:
+        for i in range(last, N):
+            ar = arr[:]
+            ar.append(i)
+            combi(ar, depth + 1, i + 1)
 
 
-def quick_sort(arr, left, right):
-    if left < right:
-        cri = partition(arr, left, right)
-        quick_sort(arr, left, cri - 1)
-        quick_sort(arr, cri + 1, right)
-
-
-def qsort(arr):
-    quick_sort(arr, 0, N - 1)
-
+N = 12
+M = 6
 
 start = datetime.now()
-for T in range(1, int(input()) + 1):
-    N = int(input())
-    num = list(map(int, input().split()))
-    qsort(num)
-    print(num)
-    print('#{} {}'.format(T, num[N // 2]))
-print(datetime.now() - start)
+v = [0] * N
+permu(0, [])
+print('재귀 순열',datetime.now() - start)
+
+start = datetime.now()
+q = [(0, [])]  # depth, arr
+while q:
+    td, tarr = q.pop(0)
+    if td == M:
+        continue
+    else:
+        for i in range(N):
+            
+            if i not in tarr:
+                ta = tarr[:]
+                ta.append(i)
+                q.append((td + 1, ta))
+print('반복 순열',datetime.now() - start)
+
+start = datetime.now()
+combi([], 0, 0)
+print('재귀 조합',datetime.now() - start)
+
+start = datetime.now()
+q = [(0, [], 0)]  # depth, arr
+while q:
+    td, tarr, tlast = q.pop(0)
+    if td == M:
+        continue
+    else:
+        for i in range(tlast, N):
+            ta = tarr[:]
+            ta.append(i)
+            q.append((td + 1, ta, i + 1))
+print('반복 조합',datetime.now() - start)

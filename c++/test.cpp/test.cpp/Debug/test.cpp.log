@@ -1,2 +1,2 @@
 ﻿  main.cpp
-c:\users\student\study_algorithm\c++\test.cpp\test.cpp\main.cpp(51): error C2664: 'void dfs(int &,int **,int *,int,int)': 인수 1을(를) 'int *'에서 'int &'(으)로 변환할 수 없습니다.
+c:\users\student\study_algorithm\c++\test.cpp\test.cpp\main.cpp(11): error C2075: 'arr2': 배열 초기화에는 중괄호로 묶인 이니셜라이저 목록이 필요합니다.

@@ -58,12 +58,40 @@
 
 - 실행시간을 확인해보라
 
-  ```python
-  import time
-  st = time.time() # 코드 시작시 시간을 기록
-  # 코드 진행
-  print(time.time() - st) # 종료 시간에서 시작 시간을 뺌
-  ```
+  - Python
+
+    1)
+
+    ```python
+    import time
+    start = time.time() # 코드 시작시 시간을 기록
+    # 코드 진행
+    print(time.time() - start) # 종료 시간에서 시작 시간을 뺌
+    ```
+
+    2)
+
+    ```python
+    from datetime import datetime
+    start = datetime.now()
+    print(dtetime.now() - start)
+    ```
+
+  - CPP 실행시간 확인하기
+
+    ```cpp
+    #include <iostream>
+    #include <ctime>
+    using namespace std;
+    int main() {
+    	clock_t start = clock();
+    	// 코드 실행
+        // clock_t 를 int나 double로 바꿔도 상관 없음
+    	cout << clock_t(clock() - start) << " ms";
+    }
+    ```
+
+    
 
 - DP 이전에 먼저 완전검색으로 통과될 수 있는 코드를 작성하라. 그리고 시간을 더 줄이기 위해 가지치기가 되었을 때, 재귀를 반복문으로 바꿀 것 (+ 메모이제이션)
 - 완전탐색을 할 땐, 전처리를 어떻게(자료구조 생성), 후처리를 어떻게 해야할까.... 를 분리해서 생각하면 퍼포먼스가 좋은 코드를 낼 수 있다.
@@ -133,6 +161,7 @@ for _ in range(T):
 using namespace std;
 
 void testcase() {
+    // seed 생성
 	srand(unsigned int(time(NULL)));
 	freopen("input.txt", "w", stdout);
 	int scope = 100;
@@ -1629,18 +1658,114 @@ def fibo(n):
 
 #### 스택구현
 
-```python
-stack = [0] * 10
-top = -1
+- Python
 
-for i in range(3):
-    stack[top + 1] = i
-    top += 1
+  ```python
+  stack = [0] * 10
+  top = -1
+  
+  for i in range(3):
+      stack[top + 1] = i
+      top += 1
+  
+  for i in range(3):
+      t = stack[top]; top -= 1
+      print(t)
+  ```
 
-for i in range(3):
-    t = stack[top]; top -= 1
-    print(t)
-```
+- CPP
+
+  ```cpp
+  class node {
+  public:
+  	int data;
+  	node *prev;
+  	node *next;
+  	node(int data) {
+  		this->data = data;
+  		this->prev = NULL;
+  		this->next = NULL;
+  	}
+  };
+  
+  class stack {
+  private:
+  	int size;
+  	node *head;
+  	node *tail;
+  public:
+  	stack() {
+  		this->size = 0;
+  		this->head = NULL;
+  		this->tail = NULL;
+  	}
+  	void push(int data) {
+  		node *element = new node(data);
+  		if (size == 0) {
+  			this->head = element;
+  			this->tail = element;
+  			this->size++;
+  		}
+  		else {
+  			element->prev = this->tail;
+  			this->tail->next = element;
+  			this->tail = element;
+  			this->size++;
+  		}
+  	}
+  
+  	int SIZE() {
+  		return this->size;
+  	}
+  
+  	int pop() {
+  		int result;
+  		if (this->size == 1) {
+  			result = this->head->data;
+  			delete this->head;
+  			this->head = NULL;
+  			this->tail = NULL;
+  		}
+  		else {
+  			result = this->tail->data;
+  			this->tail = this->tail->prev;
+  			delete this->tail->next;
+  		}
+  		this->size--;
+  		return result;
+  	}
+  };
+  ```
+
+
+
+#### 재귀구현
+
+- Python
+
+  ```python
+  def DFSr(v):
+      visited[v] = True
+  
+      for i in range(1, 8):
+          if G[v][i] and not visited[i]:
+              DFSr(i)
+  ```
+
+- CPP
+
+  ```cpp
+  void DFS(int node) {
+  	visited[node] = true;
+  	for (int i = 0; i < N; i++) {
+  		if (G[node][i] == 1 && visited[i] == false) {
+  			DFS(i);
+  		}
+  	}
+  }
+  ```
+
+  
 
 
 
@@ -1699,28 +1824,28 @@ for i in range(0, len(edges), 2):
 DFS(1)
 
 
+# ------------------------------------------------------------------
 
 
 
-#
-# def DFSr(v):
-#     print(v)
-#     visited[v] = True
-#
-#     for i in range(1, 8):
-#         if G[v][i] and not visited[i]:
-#             DFSr(i)
-#
-#
-# edges = [1, 2, 1, 3, 2, 4, 2, 5, 4, 6, 5, 6, 6, 7, 3, 7]
-# visited = [0] * 8
-# G = [[0] * 8 for _ in range(8)]
-#
-# for i in range(0, len(edges), 2):
-#     G[edges[i]][edges[i+1]] = 1
-#     G[edges[i+1]][edges[i]] = 1
-#
-# DFSr(1)
+def DFSr(v):
+    print(v)
+    visited[v] = True
+
+    for i in range(1, 8):
+        if G[v][i] and not visited[i]:
+            DFSr(i)
+
+
+edges = [1, 2, 1, 3, 2, 4, 2, 5, 4, 6, 5, 6, 6, 7, 3, 7]
+visited = [0] * 8
+G = [[0] * 8 for _ in range(8)]
+
+for i in range(0, len(edges), 2):
+    G[edges[i]][edges[i+1]] = 1
+    G[edges[i+1]][edges[i]] = 1
+
+DFSr(1)
 ```
 
 
@@ -1861,10 +1986,8 @@ for tc in range(1, 11):
 
 - 메모리로 저장
 
-  ```python
   
-  ```
-
+  
   
 
 ### 2. 괄호 이어붙이기
@@ -2684,9 +2807,7 @@ combi([], 0, -1)
 
 - 중복조합 H(n, r) = C(n + r - 1, r)
 
-```python
 
-```
 
 - 중복조합 without visited
 
@@ -3398,7 +3519,6 @@ print("cnt : ", cnt)
 ### 퇴사
 
 ```python
-
 def solve(k):
     global ans
     if k == N:
@@ -3904,4 +4024,12 @@ print(datetime.now() - start)
 # 10월 1일
 
 TSP의 DP 해결
+
+
+
+# 10월 4일
+
+disjoint-set -> 크루스칼 알고리즘 할 때 사용(최종 부모를 설정)
+
+
 
