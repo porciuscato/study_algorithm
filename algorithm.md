@@ -3857,93 +3857,274 @@ perm_r_3(0)
 
 - 병합정렬: 내가 짜본 코드
 
-  ```python
-  import random
-  from datetime import datetime
+  - Python
+  
+    ```python
+    import random
+    from datetime import datetime
+    
+    
+    def merge(left, right):
+        global m_count
+        m_count += 1
+        result = []
+        llen = len(left)
+        rlen = len(right)
+        lp = rp = 0
+        while lp < llen and rp < rlen:
+            if left[lp] < right[rp]:
+                result += [left[lp]]
+                lp += 1
+            else:
+                result += [right[rp]]
+                rp += 1
+        if lp == llen:
+            result += right[rp:rlen]
+        else:
+            result += left[lp:llen]
+        return result
+    
+    
+    def merge_sort(L, R):
+        global d_count
+        d_count += 1
+        if L == R - 1:
+            return arr[L:R]
+        else:
+            M = (L + R) // 2
+            left = merge_sort(L, M)
+            right = merge_sort(M, R)
+            return merge(left, right)
+    
+    
+    d_count = 0
+    m_count = 0
+    N = 99999
+    arr = [random.randint(1, 1000000) for _ in range(N)]
+    # print(arr)
+    start = datetime.now()
+    arr = merge_sort(0, N)
+    print(datetime.now() - start)
+    print('count : {}, {}'.format(d_count, m_count))
+    # print(arr)
+    ```
+  
+  - CPP
+  
+    ```cpp
+    #include <iostream>
+    #include <ctime>
+    #define NUM 1000000
+    using namespace std;
+    
+    int* merge(int* arr, int* result, int* Left, int* Right) {
+    	int ls, le, rs, re, idx;
+    	ls = Left[0];
+    	le = Left[1];
+    	rs = Right[0];
+    	re = Right[1];
+    	idx = ls;
+    
+    	while (ls <= le && rs <= re) {
+    		if (arr[ls] <= arr[rs]) {
+    			result[idx++] = arr[ls++];
+    		}
+    		else {
+    			result[idx++] = arr[rs++];
+    		}
+    	}
+    	if (ls > le) {
+    		for (int i = rs; i <= re; i++) {
+    			result[idx++] = arr[i];
+    		}
+    	}
+    	else {
+    		for (int i = ls; i <= le; i++) {
+    			result[idx++] = arr[i];
+    		}
+    	}
+    	
+    	for (int i = Left[0]; i <= Right[1]; i++) {
+    		arr[i] = result[i];
+    	}
+    
+    	int *value = new int[2];
+    	value[0] = Left[0];
+    	value[1] = Right[1];
+    
+    	delete Left;
+    	delete Right;
+    
+    	return value;
+    }
+    
+    
+    int* merge_sort(int* arr, int* result, int left, int right) {
+    	if (left == right) {
+    		int *a = new int[2];
+    		a[0] = left;
+    		a[1] = right;
+    		return a;
+    	}
+    	else {
+    		int mid = (left + right) / 2;
+    		int* Left = merge_sort(arr, result, left, mid);
+    		int* Right = merge_sort(arr, result, mid + 1, right);
+    		return merge(arr, result, Left, Right);
+    	}
+    }
+    
+    
+    void sorted(int *arr, int size) {
+    	int *result = new int[size];
+    
+    	merge_sort(arr, result, 0, size - 1);
+    
+    	for (int i = 0; i < size; i++) {
+    		arr[i] = result[i];
+    	}
+    
+    	delete result;
+    }
+    
+    
+    int main() {
+    	ios::sync_with_stdio(false);
+    	cin.tie(0);
+    	srand(unsigned long(time(0)));
+    
+    	
+    	int *arr = new int[NUM];
+    	for (int i = 0; i < NUM; i++) {
+    		arr[i] = rand();
+    	}
+    
+    	clock_t st = clock();
+    	sorted(arr, NUM); // mergesort 호출
+    	cout << clock() - st << " ms\n";
+    }
+    ```
+  
+    
   
   
-  def merge(left, right):
-      global m_count
-      m_count += 1
-      result = []
-      llen = len(left)
-      rlen = len(right)
-      lp = rp = 0
-      while lp < llen and rp < rlen:
-          if left[lp] < right[rp]:
-              result += [left[lp]]
-              lp += 1
-          else:
-              result += [right[rp]]
-              rp += 1
-      if lp == llen:
-          result += right[rp:rlen]
-      else:
-          result += left[lp:llen]
-      return result
-  
-  
-  def merge_sort(L, R):
-      global d_count
-      d_count += 1
-      if L == R - 1:
-          return arr[L:R]
-      else:
-          M = (L + R) // 2
-          left = merge_sort(L, M)
-          right = merge_sort(M, R)
-          return merge(left, right)
-  
-  
-  d_count = 0
-  m_count = 0
-  N = 99999
-  arr = [random.randint(1, 1000000) for _ in range(N)]
-  # print(arr)
-  start = datetime.now()
-  arr = merge_sort(0, N)
-  print(datetime.now() - start)
-  print('count : {}, {}'.format(d_count, m_count))
-  # print(arr)
-  ```
 
 
 
 
-- 퀵정렬: 내가 짜본 코드. 
+- 퀵정렬: 내가 짜본 코드. quick sort, quicksort, 퀵소트
 
   - 내장함수보다 월등하게 느리다
 
-  ```python
-  def quick_sort(arr, left, right):
-      if left < right:
-          pivot = left
-          lp = left
-          rp = right
-          while lp < rp:
-              while lp < right and arr[lp] <= arr[pivot]:
-                  lp += 1
-              while rp > 0 and arr[rp] > arr[pivot]:
-                  rp -= 1
-              if lp < rp:
-                  arr[lp], arr[rp] = arr[rp], arr[lp]
-          if arr[pivot] >= arr[rp]:
-              arr[rp], arr[pivot] = arr[pivot], arr[rp]
-          p = rp
-          quick_sort(arr, left, p - 1)
-          quick_sort(arr, p + 1, right)
-  
-  
-  def q_sort(arr):
-      quick_sort(arr, 0, len(arr) - 1)
-  
-  
-  for T in range(1, int(input()) + 1):
-      N = int(input())
-      arr = list(map(int, input().split()))
-      q_sort(arr)
-      print('#{} {}'.format(T, arr[N // 2]))
-  ```
+  - Python
+
+    ```python
+    def quick_sort(arr, left, right):
+        if left < right:
+            pivot = left
+            lp = left
+            rp = right
+            while lp < rp:
+                while lp < right and arr[lp] <= arr[pivot]:
+                    lp += 1
+                while rp > 0 and arr[rp] > arr[pivot]:
+                    rp -= 1
+                if lp < rp:
+                    arr[lp], arr[rp] = arr[rp], arr[lp]
+            if arr[pivot] >= arr[rp]:
+                arr[rp], arr[pivot] = arr[pivot], arr[rp]
+            p = rp
+            quick_sort(arr, left, p - 1)
+            quick_sort(arr, p + 1, right)
+    
+    
+    def q_sort(arr):
+        quick_sort(arr, 0, len(arr) - 1)
+    
+    
+    for T in range(1, int(input()) + 1):
+        N = int(input())
+        arr = list(map(int, input().split()))
+        q_sort(arr)
+        print('#{} {}'.format(T, arr[N // 2]))
+    ```
+
+  - CPP
+
+    ```cpp
+    #include <iostream>
+    #include <ctime>
+    using namespace std;
+    
+    void q_sort(int * arr, int left, int right, bool reverse = false) {
+    	if (left < right) {
+    		int pivot, left_p, right_p, partition, temp;
+    		pivot = left;
+    		left_p = left;
+    		right_p = right;
+    		if (reverse == false) {
+    			while (left_p < right_p) {
+    				while (left_p <= right && arr[pivot] >= arr[left_p]) {
+    					left_p++;
+    				}
+    				while (right_p >= 0 && arr[pivot] < arr[right_p]) {
+    					right_p--;
+    				}
+    				if (left_p < right_p) {
+    					temp = arr[left_p];
+    					arr[left_p] = arr[right_p];
+    					arr[right_p] = temp;
+    				}
+    			}
+    		}
+    		else {
+    			while (left_p < right_p) {
+    				while (left_p <= right && arr[pivot] <= arr[left_p]) {
+    					left_p++;
+    				}
+    				while (right_p >= 0 && arr[pivot] > arr[right_p]) {
+    					right_p--;
+    				}
+    				if (left_p < right_p) {
+    					temp = arr[left_p];
+    					arr[left_p] = arr[right_p];
+    					arr[right_p] = temp;
+    				}
+    			}
+    		}
+    		temp = arr[right_p];
+    		arr[right_p] = arr[pivot];
+    		arr[pivot] = temp;
+    		partition = right_p;
+    		q_sort(arr, left, partition - 1, reverse);
+    		q_sort(arr, partition + 1, right, reverse);
+    	}
+    }
+    
+    void quick_sort(int *arr, const int size, bool reverse = false) {
+    	q_sort(arr, 0, size - 1, reverse);
+    }
+    
+    int main() {
+    	srand(unsigned long(time(NULL)));
+    	ios::sync_with_stdio(false);
+    	cin.tie(NULL);
+    	
+    	clock_t start = clock();
+    	int num = 1000000;
+    
+    	int *arr = new int[num];
+    	for (int i = 0; i < num; i++) {
+    		arr[i] = rand() % 10000;
+    	}
+    
+    	quick_sort(arr, num, true);
+    
+    	cout << clock() - start << " ms\n";
+    }
+    ```
+
+    
 
   
 
