@@ -1,2 +1,4 @@
 ﻿  main.cpp
-c:\users\student\study_algorithm\c++\test.cpp\test.cpp\main.cpp(11): error C2075: 'arr2': 배열 초기화에는 중괄호로 묶인 이니셜라이저 목록이 필요합니다.
+c:\users\student\study_algorithm\c++\test.cpp\test.cpp\main.cpp(25): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\student\study_algorithm\c++\test.cpp\test.cpp\main.cpp(30): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  test.cpp.vcxproj -> C:\Users\student\study_algorithm\c++\test.cpp\Debug\test.cpp.exe
