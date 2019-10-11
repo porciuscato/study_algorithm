@@ -4405,9 +4405,9 @@ disjoint-set -> 크루스칼 알고리즘 할 때 사용(최종 부모를 설정
 - 삭제. 자식을 입양시켜야 함
 
   - 자식이 없는 경우
-
+- 노드 하나만 날리면 됨
   - 자식이 하나인 경우
-
+- 부모와 자식을 이으면 됨
   - 자식이 둘인 경우
     - 루트는 중앙값의 의미를 가짐
       - 왼쪽 서브트리에서 가장 큰 놈 혹은 오른쪽 서브트리에서 가장 작은 놈
@@ -4590,7 +4590,7 @@ disjoint-set -> 크루스칼 알고리즘 할 때 사용(최종 부모를 설정
 
 클래스로 트리를 구현해보자
 
-```
+```python
 class Node:
     def __init__(self, data):
         self.data = data
@@ -4609,15 +4609,19 @@ class Tree:
             return
         else:
             if node.left:
-                self.search(node.left, parent)
+                result = self.search(node.left, parent)
+                if result:
+                    return result
             if node.right:
-                self.search(node.right, parent)
+                result = self.search(node.right, parent)
+                if result:
+                    return result
 
     def append(self, parent, data):
         if not self.root:
             node = Node(parent)
             self.root = node
-        par = self.search(self.root, parent)  # root는 시작점. 여기서부터 parent를 찾자.
+        par = self.search(self.root, parent)
         if par:
             node = Node(data)
             if not par.left:
@@ -4625,29 +4629,115 @@ class Tree:
             else:
                 par.right = node
 
-    def preorder(self, node):
-        if node.data:
+    def pre_order(self, node):
+        if node:
             print(node.data, end=' ')
-            self.preorder(node.left)
-            self.preorder(node.right)
+            self.pre_order(node.left)
+            self.pre_order(node.right)
 
-    def inorder(self, node):
-        if node.data:
-            self.preorder(node.left)
+    def in_order(self, node):
+        if node:
+            self.in_order(node.left)
             print(node.data, end=' ')
-            self.preorder(node.right)
+            self.in_order(node.right)
 
-    def postorder(self, node):
-        if node.data:
-            self.preorder(node.left)
-            self.preorder(node.right)
+    def post_order(self, node):
+        if node:
+            self.post_order(node.left)
+            self.post_order(node.right)
             print(node.data, end=' ')
+
+    def preorder(self):
+        self.pre_order(self.root)
+
+    def inorder(self):
+        self.in_order(self.root)
+
+    def postorder(self):
+        self.post_order(self.root)
 
 
 data = [1, 2, 1, 3, 2, 4, 3, 5, 3, 6, 4, 7, 5, 8, 5, 9, 6, 10, 6, 11, 7, 12, 11, 13]
 tree = Tree()
 for d in range(0, len(data), 2):
     tree.append(data[d], data[d + 1])
+
+print('preorder  : ', end='')
 tree.preorder()
+print()
+print('inorder   : ', end='')
+tree.inorder()
+print()
+print('postorder : ', end='')
+tree.postorder()
+print()
+```
+
+
+
+
+
+BST(Binary Search Tree): 이진 탐색 트리 구현 / 삽입 / 삭제
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = self.right = None
+
+
+class BST:
+    def __init__(self):
+        self.root = None
+
+    def append(self, data):
+        self._append(self.root, data)
+
+    def _append(self, node, data):
+        if self.root is None:
+            self.root = Node(data)
+        else:
+            if data <= node.data:
+                if node.left is None:
+                    node.left = Node(data)
+                else:
+                    self._append(node.left, data)
+            else:
+                if node.right is None:
+                    node.right = Node(data)
+                else:
+                    self._append(node.right, data)
+
+    def delete(self, data):
+        self._delete(self.root, self.root, data)
+
+    def _delete(self, parent, sibling, data):
+        # 부모노드를 반드시 알아야 한다
+        # 지우려는 값이 노드와 동일할 경우
+        if data == sibling.data:
+            # 자식 노드가 몇개인지 봐야한다.
+            # 자식이 둘 인 경우
+            # 자식 노드가 없는 경우
+            # 자식 노드가 하나인 경우
+            pass
+        # 지우려는 값이 노드와 다를 경우
+        else:
+            if data < parent.data:
+                if parent.left.data == data:
+                    return parent, parent.left
+                else:
+                    pass
+            else:
+                if parent.right.data == data:
+                    return parent, parent.right
+                else:
+                    pass
+
+import random
+
+lst = [random.randint(1, 100) for _ in range(20)]
+tree = BST()
+for item in lst:
+    tree.append(item)
 ```
 

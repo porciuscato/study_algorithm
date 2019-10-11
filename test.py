@@ -1,58 +1,78 @@
+# 바이너리 트리를 구축한 다음에 삭제 연산을 구현해보자
 class Node:
     def __init__(self, data):
         self.data = data
-        self.left = None
-        self.right = None
+        self.left = self.right = None
 
 
-class Tree:
+class BST:
     def __init__(self):
         self.root = None
 
-    def search(self, node, parent):
-        if node.data == parent:
-            return node
-        if not node.left and not node.right:
-            return
+    def append(self, data):
+        self._append(self.root, data)
+
+    def _append(self, node, data):
+        if self.root is None:
+            self.root = Node(data)
         else:
-            if node.left:
-                self.search(node.left, parent)
-            if node.right:
-                self.search(node.right, parent)
-
-    def append(self, parent, data):
-        if not self.root:
-            node = Node(parent)
-            self.root = node
-        par = self.search(self.root, parent)  # root는 시작점. 여기서부터 parent를 찾자.
-        if par:
-            node = Node(data)
-            if not par.left:
-                par.left = node
+            if data <= node.data:
+                if node.left is None:
+                    node.left = Node(data)
+                else:
+                    self._append(node.left, data)
             else:
-                par.right = node
+                if node.right is None:
+                    node.right = Node(data)
+                else:
+                    self._append(node.right, data)
 
-    def preorder(self, node):
-        if node.data:
+    def preorder(self):
+        self._preorder(self.root)
+
+    def _preorder(self, node):
+        if node:
             print(node.data, end=' ')
-            self.preorder(node.left)
-            self.preorder(node.right)
+            self._preorder(node.left)
+            self._preorder(node.right)
 
-    def inorder(self, node):
-        if node.data:
-            self.preorder(node.left)
+    def inorder(self):
+        self._inorder(self.root)
+
+    def _inorder(self, node):
+        if node:
+            self._inorder(node.left)
             print(node.data, end=' ')
-            self.preorder(node.right)
+            self._inorder(node.right)
 
-    def postorder(self, node):
-        if node.data:
-            self.preorder(node.left)
-            self.preorder(node.right)
-            print(node.data, end=' ')
+    def delete(self, data):
+        self._delete(self.root, self.root, data)
+
+    def _delete(self, parent, sibling, data):
+        # 부모노드를 반드시 알아야 한다
+        # 지우려는 값이 노드와 동일할 경우
+        if data == sibling.data:
+            # 자식 노드가 몇개인지 봐야한다.
+            # 자식이 둘 인 경우
+            # 자식 노드가 없는 경우
+            # 자식 노드가 하나인 경우
+            pass
+        # 지우려는 값이 노드와 다를 경우
+        else:
+            if data < parent.data:
+                if parent.left.data == data:
+                    return parent, parent.left
+                else:
+                    pass
+            else:
+                if parent.right.data == data:
+                    return parent, parent.right
+                else:
+                    pass
 
 
-data = [1, 2, 1, 3, 2, 4, 3, 5, 3, 6, 4, 7, 5, 8, 5, 9, 6, 10, 6, 11, 7, 12, 11, 13]
-tree = Tree()
-for d in range(0, len(data), 2):
-    tree.append(data[d], data[d + 1])
+lst = [58, 14, 12, 10, 40, 24, 15, 21, 32, 34, 40, 44, 52, 49, 51, 76, 60, 68, 64, 81]
+tree = BST()
+for item in lst:
+    tree.append(item)
 tree.preorder()
