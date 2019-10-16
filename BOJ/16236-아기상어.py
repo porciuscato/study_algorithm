@@ -12,7 +12,7 @@ def bfs(row, col):
     # 물고기를 찾을 때까지 que에 넣는다. 
     que = [(row, col, 0)]
     vis[row][col] = 1
-    front = -1z
+    front = -1
     rear = 0
     # 여기에는 찾은 물고기를 넣자
     find = [[0] * N for _ in range(N)]
