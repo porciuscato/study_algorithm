@@ -1,6 +1,6 @@
-import sys
-
-sys.stdin = open('input.txt', 'r')
+# import sys
+#
+# sys.stdin = open('input.txt', 'r')
 
 
 def inorder(node):
@@ -24,4 +24,5 @@ for T in range(1, int(input()) + 1):
             tree[i][2] = t2
     temp = []
     inorder(1)
+    print(temp)
     print('#{} {} {}'.format(T, temp.index(1) + 1, temp.index(int(N / 2)) + 1))
