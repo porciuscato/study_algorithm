@@ -4759,6 +4759,44 @@ disjoint-set
 
 - MST 구할 때 사용
 
+- 주요 로직
+
+  - make_set()
+  - find_set()
+  - union()
+
+- make_set()
+
+  ```python
+  def make_set(node):
+      node.parent = node
+  ```
+
+- find_set(node) : 시간 효율을 높이기 위해 노드들을 돌며 대표 노드로 부모노드를 바꾼다.
+
+  ```python
+  def find_set(node):
+      if G[node][0] != node:
+          G[node][0] = find_set(G[node][0])
+          return G[node][0]
+     	else:
+          return node
+  ```
+
+- union(x, y)
+
+  ```python
+  def union(x, y):
+      v1 = find_set(x)
+      v2 = find_set(y)
+      if v1 < v2:
+          G[v2][0] = v1
+      else:
+          G[v1][0] = v2
+  ```
+
+  
+
 
 
 ### MST 최소 신장 트리
