@@ -1,6 +1,6 @@
 import sys
 
-sys.stdin = open('input.txt', 'r')
+sys.stdin = open('17143.txt', 'r')
 
 
 def clear():
@@ -74,25 +74,33 @@ def fishing(king):
     global ans, sharks, ocean, how_many
     for row in range(1, R + 1):
         if ocean[row][king]:
-            for f in range(1, M + 1):
-                if ocean[row][king] & 1 << f:
-                    ans += sharks[f][4]
-                    sharks[f][0] = 0
-                    ocean[row][king] = 0
-                    how_many[row][king] = 0
-                    return
+            pass
+            # for f in range(1, M + 1):
+            #     if ocean[row][king] & 1 << f:
+            #         ans += sharks[f][4]
+            #         sharks[f][0] = 0
+            #         ocean[row][king] = 0
+            #         how_many[row][king] = 0
+            #         return
 
 
 R, C, M = map(int, input().split())
+# 격자판
 ocean = [[0] * (C + 1) for _ in range(R + 1)]
+# 동일한 위치에 상어가 어디 있는지
 how_many = [[0] * (C + 1) for _ in range(R + 1)]
-sharks = [[0, 0, 0, 0, 0]]
+# 상어들의 정보 row, col, speed, direc, size, alive / 첫줄을 0으로
+sharks = [[0, 0, 0, 0, 0, 0]]
 for _ in range(M):
-    sharks.append(list(map(int, input().split())))
+    temp = list(map(int, input().split()))
+    temp.append(1)
+    sharks.append(temp)
+
+# ocean에 상어위치 초기화
 for i in range(1, M + 1):
     r = sharks[i][0]
     c = sharks[i][1]
-    ocean[r][c] = 2 ** i
+    ocean[r][c] = i
     how_many[r][c] += 1
 ans = 0
 king = 1
