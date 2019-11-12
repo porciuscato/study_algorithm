@@ -1,7 +1,7 @@
 from collections import deque
 import sys
 
-sys.stdin = open('input.txt', 'r')
+sys.stdin = open('16235.txt', 'r')
 
 N, M, K = map(int, input().split())
 

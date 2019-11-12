@@ -1,6 +1,6 @@
 import sys
 
-sys.stdin = open('input.txt', 'r')
+sys.stdin = open('16235.txt', 'r')
 
 delta = ((-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1))
 
@@ -56,8 +56,11 @@ def winter():
             land[r][c] += nourish[r][c]
 
 
+# M 개의 나무, K 년 후
 N, M, K = map(int, input().split())
+# N * N 크기의 땅. 처음엔 모든 양분이 5씩
 land = [[5] * N for _ in range(N)]
+# 겨울에 각 칸에 추가되는 양분의 양
 nourish = [list(map(int, input().split())) for _ in range(N)]
 trees = [[[] for _ in range(N)] for __ in range(N)]
 tree_list = []
@@ -67,9 +70,11 @@ for _ in range(M):
     trees[x - 1][y - 1].append(z)
     tree_list.append([x - 1, y - 1, z])
 ans = M
-for _ in range(K):
+k = 0
+while k < K:
     spring()
     summer()
     fall()
     winter()
-print(ans)
+    k += 1
+print(len(tree_list))
