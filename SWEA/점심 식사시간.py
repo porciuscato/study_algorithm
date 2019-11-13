@@ -3,27 +3,20 @@ import sys
 sys.stdin = open('lunchtime.txt', 'r')
 
 
+# table로 일차원 배열을 만들어서 처리
 def solve2(arr, inj):
-    stair_depth = stairs[inj][2]
     if len(arr):
-        length = len(arr)
-        for i in range(length):
-            arr[i] += 1
-        idx = 0
-        count = 0
-        time = arr[0]
-        result = []
-        while time < ans:
-            for i in range(idx, length):
-                pass
-
-            if idx == length:
-                break
-            time += 1
-        try:
-            return result[-1]
-        except:
-            return 1e5
+        depth = stairs[inj][2]
+        table = [0] * 200
+        for num in arr:
+            idx = num + 2
+            while table[idx] == 3:
+                idx += 1
+            for i in range(idx, idx + depth):
+                table[i] += 1
+        for i in range(199, 0, -1):
+            if table[i]:
+                return i
     else:
         return 0
 
