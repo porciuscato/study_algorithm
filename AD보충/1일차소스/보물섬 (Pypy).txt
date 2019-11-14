@@ -1,0 +1,31 @@
+def BFS(x, y):
+    q = []
+    q.append((x, y))
+
+    dist = [[0] * M for i in range(N)]
+    dist[x][y] = 1
+
+    while len(q):
+        (x, y) = q.pop(0)
+
+        for dx, dy in ((0, 1), (0, -1), (1, 0), (-1, 0)):
+            xx = x + dx
+            yy = y + dy
+
+            if 0 <= xx < N and 0 <= yy < M:
+                if G[xx][yy] == 'L' and dist[xx][yy] == 0:
+                    q.append((xx, yy))
+                    dist[xx][yy] = dist[x][y] + 1
+
+    return max(sum(dist, [])) - 1
+
+
+N, M = map(int, input().split())
+G = [input() for i in range(N)]
+
+ans = 0
+for i in range(N):
+    for j in range(M):
+        if G[i][j] == 'L':
+            ans = max(ans, BFS(i, j))
+print(ans)

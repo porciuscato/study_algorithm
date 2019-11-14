@@ -102,13 +102,6 @@ while count <= 100:
         for cc in range(1, mx_col + 1):
             solve(0, cc)
     count += 1
-    # ##############
-    # for rrrr in range(1, mx_row + 1):
-    #     for cccc in range(1, mx_col + 1):
-    #         print(G[rrrr][cccc], end=" ")
-    #     print()
-    # print()
-    # ##############
 
 if count > 100:
     print(-1)

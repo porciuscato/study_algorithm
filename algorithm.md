@@ -2806,6 +2806,47 @@ combi([], 0, -1)
 
 
 
+
+
+
+
+#### N 개의 조합을 두 개로 나누는 법
+
+- N이 짝수일 경우 => 이렇게 하면 연산의 효율을 반으로 줄일 수 있다.
+
+  ```python
+  def solve(arr):
+      A = [0]
+      B = []
+      for i in range(1, N):
+          if i in arr:
+              A.append(i)
+          else:
+              B.append(i)
+  
+  
+  def combi(arr, depth, last):
+      if depth == half - 1:
+          solve(arr)
+      else:
+          for i in range(last, N):
+              ar = arr[:]
+              ar.append(i)
+              combi(ar, depth + 1, i + 1)
+  
+  N = int(input())
+  half = N // 2
+  combi([], 0, 1)
+  ```
+
+  => 이것은 무슨 원리인가? 
+
+  - 가령 8개를 4개씩 나누려고 하면, 7개 중 3개만 뽑는 것이다. 수의 범위가 1부터 8까지라고 해보자. 그러면 1을 제외한 채 2부터 7까지 3가지를 뽑는 조합을 구한다. 그 조합의 결과에 1을 포함시킨다. 그 결과를 전체 범위에서 빼면 남는 값이 다른 조합이 된다. 이럴 경우 연산 수가 8C4 에서 7C3으로 줄어들어 연산은 절반이 된다.
+
+  
+
+
+
 ## 중복조합 생성하기
 
 - 중복조합 H(n, r) = C(n + r - 1, r)

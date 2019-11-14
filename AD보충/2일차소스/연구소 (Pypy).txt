@@ -1,0 +1,49 @@
+def virus_infact(x, y):
+    mat[x][y] = 2
+    for dx, dy in ((0, 1), (0, -1), (1, 0), (-1, 0)):
+        xx, yy = x + dx, y + dy
+        if not (0 <= xx < N and 0 <= yy < M): continue
+        if not mat[xx][yy]:
+            virus_infact(xx, yy)
+
+
+def solve(k, s):
+    global ans
+    if k == 3:
+        for i in range(3):
+            x, y = safe_pos[combi[i]]
+            mat[x][y] = 1
+
+        for x, y in virus_pos:
+            virus_infact(x, y)
+
+        ans = max(ans, sum(mat, []).count(0))
+
+        for i in range(N):
+            for j in range(M):
+                mat[i][j] = backup_mat[i][j]
+    else:
+        for i in range(s, len(safe_pos) + (k - 3) + 1):
+            combi[k] = i
+            solve(k + 1, i + 1)
+
+
+N, M = map(int, input().split())
+mat = [list(map(int, input().split())) for _ in range(N)]
+
+backup_mat = [[0] * M for i in range(N)]
+virus_pos = []
+safe_pos = []
+
+for i in range(N):
+    for j in range(M):
+        if mat[i][j] == 2:
+            virus_pos.append((i, j))
+        elif mat[i][j] == 0:
+            safe_pos.append((i, j))
+        backup_mat[i][j] = mat[i][j]
+
+ans = 0
+combi = [0] * 10
+solve(0, 0)
+print(ans)
