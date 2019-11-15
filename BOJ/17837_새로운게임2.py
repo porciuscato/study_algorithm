@@ -16,35 +16,25 @@ def together(idx):
 def white(idx, row, col):
     global mal_table, mals
     moving = together(idx)  # 옮길 말들의 idx가 넘어옴
-    # 목적지로 이동할 때 moving에 있는 모든 말들의 좌표, 방향 바꿈: mals 수정,
-    direc = mals[idx][2]
+    # 목적지로 이동할 때 moving에 있는 모든 말들의 좌표 바꿈: mals 수정,
     for mov in moving:
         mals[mov][0] = row
         mals[mov][1] = col
-        mals[mov][2] = direc
     # 그 말들을 위치로 이동: mal_table 수정
     mal_table[row][col] += moving
     # 크기가 4를 넘었는지 확인
-    if len(mal_table[row][col]) >= 4:
-        return True
-    else:
-        return False
+    return True if len(mal_table[row][col]) >= 4 else False
 
 
 def red(idx, row, col):
     global mal_table, mals
     moving = together(idx)
     moving = moving[::-1]
-    direc = mals[idx][2]
     for mov in moving:
         mals[mov][0] = row
         mals[mov][1] = col
-        mals[mov][2] = direc
     mal_table[row][col] += moving
-    if len(mal_table[row][col]) >= 4:
-        return True
-    else:
-        return False
+    return True if len(mal_table[row][col]) >= 4 else False
 
 
 def blue(idx, row, col):
@@ -71,19 +61,16 @@ def blue(idx, row, col):
         mals[idx][2] = 3
         new_row = row - 2
         new_col = col
+    mal_table[mals[idx][0]][mals[idx][1]] += moving
     if 0 <= new_row < N and 0 <= new_col < N:
         color = TABLE[new_row][new_col]
-        mal_table[mals[idx][0]][mals[idx][1]] += moving
         if color == 0:
             return white(idx, new_row, new_col)
         elif color == 1:
             return red(idx, new_row, new_col)
-        # 파란색이면 그냥 가만히 있는다.
         elif color == 2:
             return False
     else:
-        # 벽일 땐 그냥 가만히 있는다.
-        mal_table[mals[idx][0]][mals[idx][1]] += moving
         return False
 
 
@@ -138,7 +125,4 @@ while turn < 1000:
         ans = turn
         break
     turn += 1
-if turn == 1000:
-    print(-1)
-else:
-    print(ans)
+print(-1 if turn == 1000 else ans)

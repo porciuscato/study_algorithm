@@ -4860,3 +4860,71 @@ disjoint-set
 
 
 
+
+
+#### global 활용
+
+- 함수 간 데이터 전달을 보자...
+- 배열은 상위에서 global로 호출되면 
+
+```python
+def a3():
+    counting[3] = 3
+    sorts[0] = 3
+
+
+def a2():
+    counting[2] = 2
+    sorts[0] = 2
+    a3()
+
+
+def a1():
+    global counting, sorts
+    counting = [0] * 10
+    sorts = [0]
+    a2()
+
+
+a1()
+print(counting)
+# [0, 0, 2, 3, 0, 0, 0, 0, 0, 0]
+print(sorts[0])
+# 3
+```
+
+
+
+- 아래 코드는 에러가 난다. 
+- global 선언은 `모듈 단위`에서 일어나야 한다. 즉, 메인 함수에서 정의되거나, 메인 함수에서 바로 호출되는 함수에 정의되어 있어야 한다.
+- 이건 배열에 해당하는 내용.
+- 변수는 아니다. 변수는 무조건 메인 함수에 선언이 되어 있어야 global로 하위 함수에서 쓸 수 있다.
+
+```python
+def a3():
+    counting[3] = 3
+    sorts[0] = 3
+
+
+def a2():
+    global counting, sorts
+    counting[2] = 2
+    sorts[0] = 2
+    a3()
+
+
+def a1():
+    # counting = [0] * 10
+    # sorts = [0]
+    a2()
+
+
+a1()
+print(counting)
+# [0, 0, 2, 3, 0, 0, 0, 0, 0, 0]
+print(sorts[0])
+# 3
+```
+
+
+
