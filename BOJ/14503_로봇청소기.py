@@ -19,14 +19,14 @@ while back_going:
         now_d = (now_d + 3) % 4
         next_r = now_r + delta[now_d][0]
         next_c = now_c + delta[now_d][1]
-        if 0 <= next_r < N and 0 <= next_c < M and not TABLE[next_r][next_c] and not cleared[next_r][next_c]:
+        if not TABLE[next_r][next_c] and not cleared[next_r][next_c]:
             now_r = next_r
             now_c = next_c
             break
     else:
         back_r = now_r - delta[now_d][0]
         back_c = now_c - delta[now_d][1]
-        if 0 <= back_r < N and 0 <= back_c < M and not TABLE[back_r][back_c]:
+        if not TABLE[back_r][back_c]:
             now_r = back_r
             now_c = back_c
         else:
