@@ -1,15 +1,15 @@
-import sys
+# 중복 순열
 
-sys.stdin = open('input.txt')
+LIST = (1, 2, 3)
 
-S = [1, 2, 3, 4, 5, 6]
-length = len(S)
-face = S[0]
-ans = 0
-for idx in range(1, length):
-    if S[idx] != face:
-        if S[idx] + face == 7:
-            ans += 2
-        else:
-            ans += 1
-print(ans)
+
+def permu(arr, depth):
+    if depth == len(LIST):
+        print(arr)
+    else:
+        for idx in range(len(LIST)):
+            ar = arr[:]
+            ar.append(LIST[idx])
+            permu(ar, depth + 1)
+
+permu([], 0)
