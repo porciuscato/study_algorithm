@@ -1,15 +1,13 @@
-# 중복 순열
-
-LIST = (1, 2, 3)
-
-
-def permu(arr, depth):
-    if depth == len(LIST):
-        print(arr)
-    else:
-        for idx in range(len(LIST)):
-            ar = arr[:]
-            ar.append(LIST[idx])
-            permu(ar, depth + 1)
-
-permu([], 0)
+T = int(input())
+arr = []
+for _ in range(T):
+    x, y = map(int, input().split())
+    arr.append((x, y))
+for i in range(T):
+    x, y = arr[i]
+    ans = 0
+    for j in range(T):
+        if i != j:
+            if x < arr[j][0] and y < arr[j][1]:
+                ans += 1
+    print(ans + 1, end=' ')
