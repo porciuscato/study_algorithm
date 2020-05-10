@@ -4,14 +4,18 @@ from math import ceil
 def solution(w, h):
     k = h / w
     answer = w * h
-    tot = 0
     values = []
     for i in range(w + 1):
         values.append(i * k)
-    for i in range(w):
-        tot += ceil(values[i + 1]) - int(values[i])
-    return answer - tot
+
+    # for i in range(w):
+    #     answer -= ceil(values[i + 1]) - int(values[i])
+    return answer
 
 
-print(solution(8, 12))
+examples = [
+    [8, 12],
+]
 
+for ele in examples:
+    print(solution(*ele))

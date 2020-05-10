@@ -1796,7 +1796,7 @@ else: print("wrong!")
 
 
 
-```DFS
+```python
 def DFS(v):
     visited = [0] * (8)
     stack = [0] * 10

@@ -1,0 +1,73 @@
+{
+    "priority": [
+        "data_structure - heap",
+        "Backend - django"
+    ],
+    "subjects":{
+        "data_structure": {
+            "tree": {
+                "heap": {
+
+                }
+            }
+        },
+        "algorithm":{
+            "ad hoc": {
+                "SWEA": {
+
+                }
+            }
+        },
+        "CS": {
+            "OS": {
+                "KOCW": {}
+            },
+            "Network": {
+                "KOCW": {}
+            }
+        },
+        "Front-end": {
+            "React.js": {
+
+            }
+        },
+        "Backend": {
+            "django": [
+                "rest-auth",
+                "rest-api"
+            ],
+            "Spring": {
+
+            },
+            "Node.js": {
+
+            }
+        },
+        "DevOps": {
+            "docker": {
+
+            }
+        },
+        "Language": {
+            "Java":{
+
+            },
+            "Go": {
+
+            },
+            "Kotlin": {
+
+            },
+            "Javascript":{
+
+            }
+        },
+        "Database": {
+            "NoSQL": {
+                "velopert": {
+
+                }
+            }
+        }
+    }
+}
