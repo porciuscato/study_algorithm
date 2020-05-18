@@ -12,7 +12,6 @@ for T in range(1, int(input()) + 1):
 
     visited = [0] * (V + 1)
     weigths = [1e9] * (V + 1)
-    parents = [None] * (V + 1)
     weigths[0] = 0
 
     for _ in range(V + 1):
@@ -29,6 +28,5 @@ for T in range(1, int(input()) + 1):
         for idx, value in enumerate(graph[m_idx]):
             if not visited[idx] and 0 < value < weigths[idx]:
                 weigths[idx] = value
-                parents[idx] = m_idx
 
     print('#{} {}'.format(T, answer))
