@@ -707,7 +707,7 @@ for i in range(3):
 
 ```python
 def isWall(x,y):
-    if x < 0 ir x >= 5: return True
+    if x < 0 or x >= 5: return True
     if y < 0 or y >= 5: return True
     return False
 
