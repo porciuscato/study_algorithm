@@ -4071,7 +4071,7 @@ perm_r_3(0)
             while lp < rp:
                 while lp < right and arr[lp] <= arr[pivot]:
                     lp += 1
-                while rp > 0 and arr[rp] > arr[pivot]:
+                while rp > left and arr[rp] > arr[pivot]:
                     rp -= 1
                 if lp < rp:
                     arr[lp], arr[rp] = arr[rp], arr[lp]
