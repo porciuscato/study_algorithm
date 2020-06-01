@@ -1,4 +1,5 @@
 from itertools import permutations
+from time import time
 
 
 def permutation(origin, aim, array=[], depth=0, visited=[]):
@@ -15,14 +16,17 @@ def permutation(origin, aim, array=[], depth=0, visited=[]):
                 permutation(origin, aim, arr, depth + 1, visited)
                 visited[i] = 0
 
-import time
-
 
 SIZE = 15
+chosen = 6
 
 some = [i for i in range(SIZE)]
 
-start = time.time()
-for i in permutations(some, SIZE // 2):
+start = time()
+permutation(some, chosen)
+print(time() - start)
+
+start = time()
+for i in permutations(some, chosen):
     pass
-print(time.time() - start)
+print(time() - start)
