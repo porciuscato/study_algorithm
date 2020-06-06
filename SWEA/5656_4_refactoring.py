@@ -1,6 +1,6 @@
 import sys
 
-sys.stdin = open("5656.txt", 'r')
+sys.stdin = open("5656.txt", "r")
 
 
 from collections import deque
@@ -30,17 +30,6 @@ def bomb(column):
                     visited[p_r][p_c] = True
 
 
-def down():
-    for k in range(W):
-        for l in range(H - 1, -1, -1):
-            if Data[l][k] == 0:
-                for y in range(l - 1, -1, -1):
-                    if Data[y][k] != 0:
-                        Data[l][k] = Data[y][k]
-                        Data[y][k] = 0
-                        break
-
-
 def block_check():
     global answer
     temp = 0
@@ -49,6 +38,24 @@ def block_check():
             if Data[h][w]:
                 temp += 1
     answer = min(answer, temp)
+
+
+def down():
+    for w in range(W):
+        now = H - 1
+        pos = H - 1
+        while now >= 0 and pos >= 0:
+            if Data[now][w] == 0:
+                pos = now - 1
+                while pos >= 0 and Data[pos][w] == 0:
+                    pos -= 1
+                if pos < 0:
+                    break
+                if Data[pos][w]:
+                    Data[pos][w], Data[now][w] = Data[now][w], Data[pos][w]
+                    now -= 1
+            else:
+                now -= 1
 
 
 def data_init():
