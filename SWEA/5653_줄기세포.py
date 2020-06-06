@@ -23,6 +23,7 @@ for T in range(1, int(input()) + 1):
 
     k = 0
     while k < K:
+        # 큰 세포들부터 번식
         for cell_size in range(9, -1, -1):
             if cells[cell_size]:
                 length = len(cells[cell_size])
