@@ -115,14 +115,10 @@ def recursive(board, blanks, depth, length):
                     board[blank.row][blank.col] = 0
 
 
-def solve(board, blanks):
-    recursive(board, blanks, 0, len(blanks))
-
-
 def main():
     board = [list(map(int, input().split())) for _ in range(9)]
     blanks = collect_blanks(board)
-    solve(board, blanks)
+    recursive(board, blanks, 0, len(blanks))
 
 
 main()
