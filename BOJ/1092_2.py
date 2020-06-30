@@ -4,12 +4,6 @@ input = sys.stdin.readline
 
 
 def main():
-    # import random
-    # N = 50
-    # crains = [random.randint(1, 1000000) for _ in range(N)]
-    # M = 10000
-    # boxes = [random.randint(800000, 900000) for _ in range(M)]
-
     N = int(input())
     crains = list(map(int, input().split()))
     M = int(input())
