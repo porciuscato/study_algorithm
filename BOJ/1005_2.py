@@ -1,4 +1,7 @@
 from collections import deque
+import sys
+
+input = sys.stdin.readline
 
 
 def main():
@@ -14,26 +17,18 @@ def main():
 
         # BFS
         DP = [0 for _ in range(N + 1)]
-        visited = [True] + [False for _ in range(N)]
-        answers = []
         que = deque([])
         que.append((target, W[target]))
         DP[target] = W[target]
         while que:
-            flag = True
             start, weight = que.popleft()
             for st in board[start]:
-                if not visited[st] or board[st]:
-                    value = DP[start] + W[st]
-                    if value > DP[st]:
+                value = DP[start] + W[st]
+                if value > DP[st]:
+                    DP[st] = value
+                    if board[st]:
                         que.append((st, value))
-                        DP[st] = value
-                        flag = False
-            if flag:
-                answers.append(weight)
-            else:
-                visited[start] = True
-        print(max(answers))
+        print(max(DP))
 
 
 main()
