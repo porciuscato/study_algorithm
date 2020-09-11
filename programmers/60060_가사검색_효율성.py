@@ -1,10 +1,8 @@
-from collections import deque
-
-
 class Node:
-    def __init__(self, letter):
+    def __init__(self, letter=None):
         self.letter = letter
         self.children = {}
+        self.count = 0
 
     def __repr__(self):
         return f"<{self.letter}>"
@@ -12,40 +10,28 @@ class Node:
 
 class Trie:
     def __init__(self):
-        self.head = Node(None)
+        self.head = Node()
 
     def insert(self, word):
         current = self.head
         for char in word:
             if char not in current.children:
                 current.children[char] = Node(char)
+            current.count += 1
             current = current.children[char]
 
     def search(self, word):
-        cnt = 0
         current = self.head
-        deq = deque([(current, -1)])
         length = len(word)
-        current, layer = deq.popleft()
         for i in range(length):
             char = word[i]
-            while layer == i - 1:
-                if char == "?":
-                    for child in current.children.values():
-                        deq.append((child, i))
-                elif char in current.children:
-                    deq.append((current.children[char], i))
-                try:
-                    current, layer = deq.popleft()
-                except IndexError:
-                    return cnt
-                if layer == length - 1:
-                    cnt += 1
-        while deq:
-            if layer == length - 1:
-                cnt += 1
-            c, layer = deq.popleft()
-        return cnt
+            if char == "?":
+                return current.count
+            else:
+                if char in current.children:
+                    current = current.children[char]
+                else:
+                    return 0
 
 
 def solution(words, queries):
