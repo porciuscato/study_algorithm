@@ -20,7 +20,7 @@ class Dice:
         elif direc == 4:  # 남
             temp = self.status[3][1]
             for i in range(3, 0, -1):
-                self.status[i][1] = self.status[i - 1][1]   
+                self.status[i][1] = self.status[i - 1][1]
             self.status[0][1] = temp
         elif direc == 1:  # 동
             right = self.status[1][2]

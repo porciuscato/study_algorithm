@@ -5,14 +5,22 @@ input = sys.stdin.readline
 
 def turn_90d(row, col, length, direc):
     temp = [[0 for _ in range(12)] for __ in range(12)]
-    if direc == 1:  # 오른쪽
-        for r in range(length):
-            for c in range(length):
+    for r in range(length):
+        for c in range(length):
+            if direc:
                 temp[row + c][col + length - 1 - r] = cube[row + r][col + c]
-    else:  # 왼쪽
-        for r in range(length):
-            for c in range(length):
+            else:
                 temp[row + length - 1 - c][col + r] = cube[row + r][col + c]
+    for r in range(row, row + length):
+        for c in range(col, col + length):
+            cube[r][c] = temp[r][c]
+
+
+def turn_180d(row, col, length):
+    temp = [[0 for _ in range(12)] for __ in range(12)]
+    for r in range(length):
+        for c in range(length):
+            temp[row + length - 1 - r][col + length - 1 - c] = cube[row + r][col + c]
     for r in range(row, row + length):
         for c in range(col, col + length):
             cube[r][c] = temp[r][c]
@@ -36,17 +44,13 @@ def up_twice():
             temp.append(cube[r % 12][c])
         for r in range(12):
             cube[r][c] = temp[r]
-    turn_90d(3, 6, 3, 1)
-    turn_90d(3, 6, 3, 1)
-    turn_90d(3, 0, 3, 0)
-    turn_90d(3, 0, 3, 0)
+    turn_180d(3, 6, 3)
+    turn_180d(3, 0, 3)
 
 
 def turn_half():
-    turn_90d(0, 0, 9, 1)
-    turn_90d(0, 0, 9, 1)
-    turn_90d(9, 3, 3, 1)
-    turn_90d(9, 3, 3, 1)
+    turn_180d(0, 0, 9)
+    turn_180d(9, 3, 3)
 
 
 def turn_right():
