@@ -8,5 +8,5 @@ def prime_numbers(number):
     return [t for t in range(2, number + 1) if sieve[t]]
 
 
-size = 100000
+size = 10000000
 print(prime_numbers(size))
