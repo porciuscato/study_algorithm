@@ -54,3 +54,5 @@ fabric.properties
 
 .idea/**/markdown-navigator.xml
 .idea/**/markdown-navigator/
+
+.class

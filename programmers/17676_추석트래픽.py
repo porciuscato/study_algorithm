@@ -7,7 +7,7 @@ def time_to_ms(st):
     return start_time, end_time
 
 
-def condition(start, end, log):
+def condition(start, end, log): 
     log_s, log_e = log
     if log_e < start or log_s > end:
         return False
