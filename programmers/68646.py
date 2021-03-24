@@ -4,7 +4,8 @@ from pprint import pprint
 def solution(a):
     answer = 0
     check = [[10e7 for _ in range(len(a))] for __ in range(2)]
-    left, right = 10e7, 10e7
+    left, right = 10e12, 10e12
+
     for i in range(len(a)):
         if a[i] < left:
             left = a[i]
