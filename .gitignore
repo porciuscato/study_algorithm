@@ -4,7 +4,7 @@ output.txt
 pinball.py
 test.py
 test2.py
-venv
+venv/
 
 .idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -56,3 +56,4 @@ fabric.properties
 .idea/**/markdown-navigator/
 
 *.class
+.class
