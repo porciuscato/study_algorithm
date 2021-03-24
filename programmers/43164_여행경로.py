@@ -12,7 +12,7 @@ def solution(tickets):
         depart, arrive = ticket
         DB[all_ports.index(depart)][all_ports.index(arrive)] += 1
 
-    print(DB)
+    # print(DB)
     stack = [0]
     answer = ["ICN"]
     while stack:
@@ -26,5 +26,11 @@ def solution(tickets):
     return answer
 
 
-print(solution([["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL", "SFO"]]))
+cases = [
+    [["ICN", "JFK"], ["HND", "IAD"], ["JFK", "HND"]],
+    [["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL", "SFO"]],
+]
+
+for case in cases:
+    print(solution(case))
 # print(solution([["ICN", "JFK"], ["HND", "IAD"], ["JFK", "HND"]]))
