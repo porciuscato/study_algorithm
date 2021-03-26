@@ -6,7 +6,7 @@ def solution(info, query):
         database.append(tup.split(" "))
     # 정렬
     database.sort()
-    # qeury
+    # query
     for ask in query:
         ans = 0
         temp = ask.split(" ")
