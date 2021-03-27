@@ -2,19 +2,18 @@ from heapq import heappush, heappop
 
 
 def dijkstra(fare_matrix, distances, start):
-    N = len(fare_matrix)
     distances[start] = 0
-
     que = []
     heappush(que, (distances[start], start))
 
     while que:
-        dis_until_now, node = heappop(que)
-        if dis_until_now > distances[node]:
+        dis_until_now, pos = heappop(que)
+
+        if dis_until_now > distances[pos]:
             continue
-        for i in range(N):
-            if fare_matrix[node][i]:
-                new_distance = dis_until_now + fare_matrix[node][i]
+        for i in range(len(distances)):
+            if fare_matrix[pos][i]:
+                new_distance = dis_until_now + fare_matrix[pos][i]
                 if new_distance < distances[i]:
                     distances[i] = new_distance
                     heappush(que, (new_distance, i))
