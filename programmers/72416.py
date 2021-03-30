@@ -1,6 +1,47 @@
+INF = 4 * (10 ** 10)
+
+
+def search(costs, graph, node):
+    leader = costs[node]
+    member = 0
+    leaves = []
+    if not graph[node]:
+        return leader, INF
+    for leaf in graph[node]:
+        leaves.append(search(costs, graph, leaf))
+    for leaf in leaves:
+        if leaf[1] != INF:
+            leader += min(leaf[0], leaf[1])
+    mnValue, mnDiffer = INF, INF
+    onlyLeaves, flag = True, False
+    for leaf in leaves:
+        if leaf[1] != INF:
+            onlyLeaves = False
+            if leaf[0] <= leaf[1]:
+                flag = True
+            else:
+                mnDiffer = min(mnDiffer, leaf[0] - leaf[1])
+            member += min(leaf[0], leaf[1])
+        else:
+            mnValue = min(mnValue, leaf[0])
+
+    if onlyLeaves:
+        member = mnValue
+    else:
+        if not flag:
+            if onlyLeaves:
+                member += mnDiffer
+            else:
+                member += min(mnDiffer, mnValue)
+    return leader, member
+
+
 def solution(sales, links):
-    answer = 0
-    return answer
+    costs = [0] + sales[:]
+    graph = [[] for _ in range(len(sales) + 1)]
+    for s, e in links:
+        graph[s].append(e)
+    return min(search(costs, graph, 1))
 
 
 cases = [
