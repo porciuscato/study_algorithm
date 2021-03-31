@@ -9,10 +9,7 @@ def check(order, combi):
 
 
 def solution(orders, course):
-    # 1) 총메뉴
-    total_menus = list(set(''.join(orders)))
-    total_menus.sort()
-    # 2) 완탐
+    orders = sorted(list(map(lambda x: ''.join(x), map(sorted, orders))), key=lambda x: (len(x), x))
     candidates = {}
     for count in course:
         for order in orders:
@@ -22,7 +19,6 @@ def solution(orders, course):
                         candidates[combi] += 1
                     else:
                         candidates[combi] = 1
-    # 3) 정렬
     answer = []
     for key, value in candidates.items():
         if value >= 2:
@@ -34,8 +30,8 @@ def solution(orders, course):
 cases = [
     (["ABC", "ABCD"], [2, 3]),
     (["ABCFG", "AC", "CDE", "ACDE", "BCFG", "ACDEH"], [2, 3, 4]),
-    # (["ABCDE", "AB", "CD", "ADE", "XYZ", "XYZ", "ACD"], [2, 3, 5]),
-    # (["XYZ", "XWY", "WXA"], [2, 3, 4]),
+    (["ABCDE", "AB", "CD", "ADE", "XYZ", "XYZ", "ACD"], [2, 3, 5]),
+    (["XYZ", "XWY", "WXA"], [2, 3, 4]),
 ]
 
 for case in cases:
