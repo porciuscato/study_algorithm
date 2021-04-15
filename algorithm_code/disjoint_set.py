@@ -22,7 +22,7 @@ def union(x, y):
     link(find_set(x), find_set(y))
 
 
-SIZE = 20
+SIZE = 5
 arr = [i for i in range(SIZE)]
 parent = [0] * SIZE
 rank = [0] * SIZE
@@ -32,7 +32,7 @@ for ele in arr:
 
 union(0, 1)
 union(2, 3)
-union(4, 5)
+union(1, 4)
 union(1, 3)
 
 for ele in arr:
