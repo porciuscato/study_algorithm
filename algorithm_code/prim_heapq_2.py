@@ -10,7 +10,7 @@ def prim(G, s):
     visited = [False] * N
 
     que = []
-    heappush(que, (0, s))  # 가중치, 정점
+    heappush(que, (0, s))
     for i in range(N):
         if i == s:
             continue
