@@ -1,16 +1,15 @@
 class SegmentTree:
     def __init__(self, arr: list):
         self.arr = arr
-        self.__tree_size = self.__get_max_node_number(0, len(self.arr) - 1) + 1
+        self.__tree_size = self.__get_tree_size(len(self.arr))
         self.tree = [0] * self.__tree_size
         self.__tree_init(self.arr, self.tree, 0, len(self.arr) - 1)
 
-    def __get_max_node_number(self, left: int, right: int, node: int = 0) -> int:
-        if left == right:
-            return node
-        else:
-            return max(self.__get_max_node_number(left, (left + right) // 2, node * 2 + 1),
-                       self.__get_max_node_number((left + right) // 2 + 1, right, node * 2 + 2))
+    def __get_tree_size(self, size) -> int:
+        s = 1
+        while s < size:
+            s *= 2
+        return s * 2
 
     def __tree_init(self, arr: list, tree: list, left: int, right: int, node: int = 0):
         if left == right:
