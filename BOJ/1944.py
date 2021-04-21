@@ -43,10 +43,13 @@ def prim(graph) -> int:
                 distances[node] = graph[m_idx][node]
                 heappush(que, (distances[node], node))
 
-    for visit in visited:
-        if not visit:
+    total = 0
+    for n in range(M + 1):
+        if visited[n]:
+            total += distances[n]
+        else:
             return -1
-    return sum(distances)
+    return total
 
 
 if __name__ == "__main__":
