@@ -95,4 +95,5 @@ if __name__ == '__main__':
     tree = [0] * (size + 1)
     result = tree_init(arr, tree, 0, len(arr) - 1)
     sub_sum = get_subsum(tree, 0, len(arr) - 1, 2, 5)
+    print(tree)
 

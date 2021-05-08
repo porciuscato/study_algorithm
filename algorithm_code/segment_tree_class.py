@@ -60,3 +60,4 @@ if __name__ == "__main__":
     arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     seg_tree = SegmentTree(arr)
     print(seg_tree.get_subsum(2, 3))
+    print(seg_tree.tree)
