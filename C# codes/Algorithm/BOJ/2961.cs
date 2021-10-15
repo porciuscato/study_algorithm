@@ -52,11 +52,11 @@ namespace BOJ
             }
         }
     }
-    class Program
-    {
-        static void Main()
-        {
-            BOJ2961.Start();
-        }
-    }
+    //class Program
+    //{
+    //    static void Main()
+    //    {
+    //        BOJ2961.Start();
+    //    }
+    //}
 }
