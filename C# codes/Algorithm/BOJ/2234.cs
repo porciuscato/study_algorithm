@@ -68,6 +68,7 @@ namespace BOJ
                         int front = -1, tail = 0;
 
                         list.Add(new adjNode(i, j));
+                        visited[i, j] = true;
 
                         while (front != tail)
                         {
@@ -75,14 +76,14 @@ namespace BOJ
                             roomSize++;
                             int r = list[front].row;
                             int c = list[front].col;
-                            visited[r, c] = true;
 
                             foreach (adjNode node in Castle[r, c].adjcents)
                             {
-                                if(!visited[node.row, node.col])
+                                if (!visited[node.row, node.col])
                                 {
                                     tail++;
                                     list.Add(new adjNode(node.row, node.col));
+                                    visited[node.row, node.col] = true;
                                     Castle[node.row, node.col].roomNum = roomCount;
                                 }
                             }
@@ -107,13 +108,13 @@ namespace BOJ
             {
                 for (int j = 0; j < COL; j++)
                 {
-                    for(int k = 0; k < 4; k++)
+                    for (int k = 0; k < 4; k++)
                     {
                         int r = i + Delta[k, 0];
                         int c = j + Delta[k, 1];
                         if (r >= 0 && r < ROW && c >= 0 && c < COL)
                         {
-                            if(Castle[i, j].roomNum != Castle[r, c].roomNum)
+                            if (Castle[i, j].roomNum != Castle[r, c].roomNum)
                             {
                                 maxWallSize = Math.Max(maxWallSize, Castle[i, j].roomSize + Castle[r, c].roomSize);
                             }
