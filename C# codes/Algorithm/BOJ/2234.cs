@@ -154,11 +154,11 @@ namespace BOJ
             }
         }
     }
-    class Program
-    {
-        static void Main()
-        {
-            BOJ2234.Start();
-        }
-    }
+    //class Program
+    //{
+    //    static void Main()
+    //    {
+    //        BOJ2234.Start();
+    //    }
+    //}
 }
