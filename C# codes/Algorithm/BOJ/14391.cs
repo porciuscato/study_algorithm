@@ -91,11 +91,11 @@ namespace BOJ
             bitValue = 1 << (N * M - 1);
         }
     }
-    class Program
-    {
-        static void Main()
-        {
-            BOJ14391.Start();
-        }
-    }
+    //class Program
+    //{
+    //    static void Main()
+    //    {
+    //        BOJ14391.Start();
+    //    }
+    //}
 }
